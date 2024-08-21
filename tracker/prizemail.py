@@ -49,7 +49,7 @@ def default_prize_winner_template_name():
 
 
 def default_prize_winner_template():
-    return post_office.models.EmailTemplate(
+    return post_office.models.EmailTemplate.objects.create(
         name=default_prize_winner_template_name(),
         subject='{% if multi %}You won some prizes at {{ event.name }}{% else %}You won a prize at {{ event.name }}{% endif %}',
         description="""A basic template for automailing prize winners. DO NOT USE THIS TEMPLATE. Copy the contents and modify it to suit your needs.
@@ -84,7 +84,7 @@ def default_activate_prize_handlers_template_name():
 
 
 def default_activate_prize_handlers_template():
-    return post_office.models.EmailTemplate(
+    return post_office.models.EmailTemplate.objects.create(
         name=default_activate_prize_handlers_template_name(),
         subject='{{ event.name }} Prize Contributor Account Activation',
         description="""A template to automail prize handlers to activate their account on the site, such that they can deal with prize accept/shipping stuff. Copy the contents and modify it to suit your needs.
@@ -162,7 +162,7 @@ def default_prize_contributor_template_name():
 
 
 def default_prize_contributor_template():
-    return post_office.models.EmailTemplate(
+    return post_office.models.EmailTemplate.objects.create(
         name=default_prize_contributor_template_name(),
         subject='{{ event.name }} Prize Contributor Notification',
         description="""A basic template for automailing back prize accept/reject notifications. DO NOT USE THIS TEMPLATE. Copy the contents and modify it to suit your needs.
@@ -250,7 +250,7 @@ def default_prize_winner_accept_template_name():
 
 
 def default_prize_winner_accept_template():
-    return post_office.models.EmailTemplate(
+    return post_office.models.EmailTemplate.objects.create(
         name=default_prize_winner_accept_template_name(),
         description="""A basic template for automailing when prizes are accepted by winners. DO NOT USE THIS TEMPLATE. Copy the contents and modify it to suit your needs.
 
@@ -332,7 +332,7 @@ def default_prize_shipping_template_name():
 
 
 def default_prize_shipping_template():
-    return post_office.models.EmailTemplate(
+    return post_office.models.EmailTemplate.objects.create(
         name=default_prize_shipping_template_name(),
         description="""A basic template for automailing when prizes are shipped or keys are awarded. DO NOT USE THIS TEMPLATE. Copy the contents and modify it to suit your needs.
 

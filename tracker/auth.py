@@ -20,7 +20,7 @@ def default_password_reset_template_name():
 
 # TODO: get better control over when the auth links expire, and explicitly state the expiration time
 def default_password_reset_template():
-    return post_office.models.EmailTemplate(
+    return post_office.models.EmailTemplate.objects.create(
         name=default_password_reset_template_name(),
         subject='Password Reset',
         description="""Email template for user password reset.
@@ -51,7 +51,7 @@ def default_registration_template_name():
 
 
 def default_registration_template():
-    return post_office.models.EmailTemplate(
+    return post_office.models.EmailTemplate.objects.create(
         name=default_registration_template_name(),
         subject='Account Registration',
         description="""Email template for user account registration.
@@ -80,7 +80,7 @@ def default_volunteer_registration_template_name():
 
 
 def default_volunteer_registration_template():
-    return post_office.models.EmailTemplate(
+    return post_office.models.EmailTemplate.objects.create(
         name=default_volunteer_registration_template_name(),
         subject='Donation Processing',
         description="""Email template for donation volunteers.
