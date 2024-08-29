@@ -106,7 +106,7 @@ class TestDonations(APITestCase):
             self.assertEqual(response.data[index]['id'], donation.pk)
 
     def test_unprocessed_returns_only_after_timestamp(self):
-        date = datetime.utcnow()
+        date = utcnow()
         old_donations = self.generate_donations(
             self.event,
             count=2,

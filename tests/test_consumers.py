@@ -179,10 +179,10 @@ class TestProcessingConsumer(TransactionTestCase):
         connected, subprotocol = await communicator.connect()
         self.assertFalse(connected, 'Anonymous user was allowed to connect')
 
-    @mock.patch('tracker.consumers.processing.datetime')
+    @mock.patch('tracker.consumers.processing.util')
     @async_to_sync
-    async def test_new_donation_posts_to_consumer(self, datetime_mock):
-        datetime_mock.utcnow.return_value = datetime.datetime.now()
+    async def test_new_donation_posts_to_consumer(self, util_mock):
+        util_mock.utcnow.return_value = datetime.datetime.now(datetime.timezone.utc)
         communicator = self.get_communicator(as_user=self.user)
         connected, subprotocol = await communicator.connect()
         self.assertTrue(connected, 'Could not connect')
@@ -193,7 +193,7 @@ class TestProcessingConsumer(TransactionTestCase):
             'donation': self.serialized_donation,
             'donation_count': 1,
             'event_total': float(self.donation.amount),
-            'posted_at': str(datetime_mock.utcnow()),
+            'posted_at': str(util_mock.utcnow()),
         }
         self.assertEqual(result['type'], expected['type'])
         self.assertEqual(result['donation'], expected['donation'])

@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from django.contrib.admin import register
 from django.contrib.auth.decorators import permission_required
@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.urls import path, reverse
 from django.utils.html import format_html
 
-from tracker import forms, logutil, models, search_filters, settings, viewutil
+from tracker import forms, logutil, models, search_filters, settings, util, viewutil
 
 from .filters import DonationListFilter
 from .forms import DonationForm, DonorForm, MilestoneForm
@@ -118,7 +118,7 @@ class DonationAdmin(EventLockedMixin, CustomModelAdmin):
             donor=None,
             domain='PAYPAL',
             transactionstate='PENDING',
-            timereceived__lte=datetime.utcnow() - timedelta(hours=8),
+            timereceived__lte=util.utcnow() - timedelta(hours=8),
         ):
             for bid in donation.bids.all():
                 bid.delete()

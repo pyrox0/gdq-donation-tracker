@@ -1,6 +1,5 @@
 import logging
 from collections import defaultdict
-from datetime import datetime
 from decimal import Decimal
 from gettext import gettext as _
 
@@ -570,7 +569,7 @@ class Bid(mptt.models.MPTTModel):
                 analytics.track(
                     AnalyticsEventTypes.INCENTIVE_MET,
                     {
-                        'timestamp': datetime.utcnow(),
+                        'timestamp': util.utcnow(),
                         'bid_id': self.pk,
                         'event_id': self.event_id,
                         'run_id': self.speedrun_id,
@@ -675,7 +674,7 @@ class DonationBid(models.Model):
             analytics.track(
                 AnalyticsEventTypes.BID_APPLIED,
                 {
-                    'timestamp': datetime.utcnow(),
+                    'timestamp': util.utcnow(),
                     'event_id': self.donation.event_id,
                     'incentive_id': self.bid.id,
                     'parent_id': self.bid.parent_id,

@@ -1,6 +1,6 @@
 import asyncio
-from datetime import datetime
 
+from tracker import util
 from tracker.analytics import AnalyticsEventTypes, analytics
 
 
@@ -20,9 +20,9 @@ def AnalyticsMiddleware(get_response):
     if asyncio.iscoroutinefunction(get_response):
 
         async def async_middleware(request):
-            started = datetime.utcnow()
+            started = util.utcnow()
             response = await get_response(request)
-            finished = datetime.utcnow()
+            finished = util.utcnow()
             track_request(request, started, finished)
             return response
 
@@ -31,9 +31,9 @@ def AnalyticsMiddleware(get_response):
     else:
 
         def sync_middleware(request):
-            started = datetime.utcnow()
+            started = util.utcnow()
             response = get_response(request)
-            finished = datetime.utcnow()
+            finished = util.utcnow()
             track_request(request, started, finished)
             return response
 

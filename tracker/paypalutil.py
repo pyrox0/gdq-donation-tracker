@@ -1,9 +1,9 @@
-from datetime import datetime
 from decimal import Decimal
 
 from paypal.standard.ipn.forms import PayPalIPNForm
 from paypal.standard.ipn.models import PayPalIPN
 
+import tracker.util as util
 import tracker.viewutil as viewutil
 from tracker.models import Country, Donation, Donor, Event
 
@@ -152,7 +152,7 @@ def initialize_paypal_donation(ipnObj):
     donation.amount = Decimal(ipnObj.mc_gross)
     donation.currency = ipnObj.mc_currency
     if not donation.timereceived:
-        donation.timereceived = datetime.utcnow()
+        donation.timereceived = util.utcnow()
     donation.testdonation = ipnObj.test_ipn
     donation.fee = Decimal(ipnObj.mc_fee or 0)
 

@@ -1,4 +1,3 @@
-import datetime
 import logging
 import random
 import traceback
@@ -12,7 +11,7 @@ from django.views.decorators.cache import cache_page, never_cache
 from django.views.decorators.csrf import csrf_exempt
 from paypal.standard.forms import PayPalPaymentsForm
 
-from tracker import eventutil, forms, models, paypalutil, viewutil
+from tracker import eventutil, forms, models, paypalutil, util, viewutil
 from tracker.analytics import AnalyticsEventTypes, analytics
 
 from . import common as views_common
@@ -70,7 +69,7 @@ def _track_donation_pending(donation, ipn, receivers_fault):
         AnalyticsEventTypes.DONATION_PENDING,
         {
             **_get_donation_event_fields(donation),
-            'timestamp': datetime.datetime.utcnow(),
+            'timestamp': util.utcnow(),
             'pending_reason': ipn.pending_reason,
             'reason_code': ipn.reason_code,
             'receivers_fault': receivers_fault,
@@ -84,7 +83,7 @@ def _track_donation_completed(donation):
         AnalyticsEventTypes.DONATION_COMPLETED,
         {
             **_get_donation_event_fields(donation),
-            'timestamp': datetime.datetime.utcnow(),
+            'timestamp': util.utcnow(),
         },
     )
 
@@ -95,7 +94,7 @@ def _track_donation_cancelled(donation):
         AnalyticsEventTypes.DONATION_CANCELLED,
         {
             **_get_donation_event_fields(donation),
-            'timestamp': datetime.datetime.utcnow(),
+            'timestamp': util.utcnow(),
         },
     )
 

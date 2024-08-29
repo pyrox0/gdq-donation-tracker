@@ -1,10 +1,9 @@
-from datetime import datetime
-
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from channels.layers import get_channel_layer
 from django.contrib.auth import get_user_model
 
+from tracker import util
 from tracker.api.serializers import DonationSerializer
 from tracker.models import Donation
 
@@ -68,7 +67,7 @@ def broadcast_new_donation_to_processors(
                 'donation': _serialize_donation(donation),
                 'event_total': total,
                 'donation_count': donation_count,
-                'posted_at': str(datetime.utcnow()),
+                'posted_at': str(util.utcnow()),
             },
         },
     )
