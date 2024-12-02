@@ -60,6 +60,7 @@ setup(
         'djangorestframework~=3.9',
         'python-dateutil~=2.8.1;python_version<"3.11"',
         'requests>=2.27.1,<2.33.0',
+        'drf-spectacular~=0.28.0',
     ],
     extras_require={
         'development': ['daphne~=4.0'],

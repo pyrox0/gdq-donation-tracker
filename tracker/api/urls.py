@@ -1,6 +1,7 @@
 """Define API URLs and documentation for our REST API."""
 
 from django.urls import include, path
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework import routers
 
 from tracker.api import views
@@ -50,6 +51,12 @@ router.register(r'regions', country.CountryRegionViewSet, basename='region')
 # use the router-generated URLs, and also link to the browsable API
 urlpatterns = [
     path('', include(router.urls)),
+    path('schema/', SpectacularAPIView.as_view(), name='schema'),
+    path(
+        'schema/swagger-ui/',
+        SpectacularSwaggerView.as_view(url_name='tracker:api_v2:schema'),
+        name='swagger-ui',
+    ),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
 app_name = 'tracker'
