@@ -10,6 +10,8 @@ class MeSerializer(serializers.Serializer):
 
 
 class MeViewSet(viewsets.GenericViewSet):
+    serializer_class = MeSerializer
+
     def list(self, request):
         """
         Return information about the user that made the request.

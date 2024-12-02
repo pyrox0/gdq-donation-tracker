@@ -10,6 +10,7 @@ from inspect import signature
 from django.core.exceptions import NON_FIELD_ERRORS, ObjectDoesNotExist
 from django.core.exceptions import ValidationError as DjangoValidationError
 from django.utils.translation import gettext_lazy as _
+from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 from rest_framework.exceptions import ErrorDetail, ValidationError
 from rest_framework.serializers import ListSerializer, as_serializer_error
@@ -280,6 +281,7 @@ class PrimaryOrNaturalKeyLookup:
             self.fail(messages.INVALID_LOOKUP_TYPE_CODE)
 
 
+@extend_schema_field(str)
 class ClassNameField(serializers.Field):
     """Provide the class name as a lowercase string, to provide it as an extra field.
 
@@ -555,9 +557,11 @@ class DonationBidSerializer(SerializerWithPermissionsMixin, TrackerModelSerializ
         model = DonationBid
         fields = ('type', 'id', 'donation', 'bid', 'bid_name', 'bid_state', 'amount')
 
+    @extend_schema_field(str)
     def get_bid_name(self, donation_bid: DonationBid):
         return donation_bid.bid.fullname()
 
+    @extend_schema_field(str)
     def get_bid_state(self, donation_bid: DonationBid):
         return donation_bid.bid.state
 
@@ -612,6 +616,7 @@ class DonationSerializer(SerializerWithPermissionsMixin, serializers.ModelSerial
 
         return fields
 
+    @extend_schema_field(str)
     def get_donor_name(self, donation: Donation):
         if donation.anonymous():
             return Donor.ANONYMOUS
@@ -659,7 +664,7 @@ class EventSerializer(PrimaryOrNaturalKeyLookup, TrackerModelSerializer):
 
         return fields
 
-    def get_timezone(self, obj):
+    def get_timezone(self, obj) -> str:
         return str(obj.timezone)
 
     def get_donation_count(self, obj):
@@ -718,6 +723,7 @@ class VideoLinkSerializer(TrackerModelSerializer):
         )
 
 
+@extend_schema_field(str)
 class TagField(serializers.RelatedField):
     default_error_messages = {
         messages.INVALID_NATURAL_KEY_CODE: messages.INVALID_NATURAL_KEY,
